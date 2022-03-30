@@ -1,0 +1,33 @@
+{
+  "dependencies": {
+    "sax": "^1.2.4"
+  },
+  "name": "saxer",
+  "description": "A quick PoC repo to extend the sax-js library with partial entity resolution for the Metaschema definitions.",
+  "version": "0.0.1",
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node ./dist/index.js",
+    "test": "false"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aj-stein-nist/saxer.git"
+  },
+  "keywords": [
+    "sax",
+    "xml"
+  ],
+  "author": "Alexander Stein <alexander.stein@nist.gov>",
+  "license": "NIST-PD-fallback",
+  "types": "./dist/index.d.ts",
+  "bugs": {
+    "url": "https://github.com/aj-stein-nist/saxer/issues"
+  },
+  "homepage": "https://github.com/aj-stein-nist/saxer#readme",
+  "devDependencies": {
+    "@types/sax": "^1.2.4",
+    "tsc": "^2.0.4"
+  }
+}
