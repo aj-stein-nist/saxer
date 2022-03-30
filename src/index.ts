@@ -3,7 +3,7 @@ import { createStream, SAXStream } from 'sax';
 
 import { ParserStrictness } from './constants';
 
-const formatNode = (node: any): string => {
+const format = (node: any): string => {
     try {
         return node?.name.toLowerCase();
     } catch(err) {
@@ -24,12 +24,20 @@ const createXmlStreamParser = (
             streamParser._parser.resume();
         });
 
+        streamParser.on('ondoctype', function(doctype) {
+            console.log(`doctype: ${format(doctype)}`);
+        });
+
+        streamParser.on('onsgmldeclaration', function(doctype) {
+            console.log(`onsgmldeclaration: ${format(doctype)}`);
+        });
+
         streamParser.on('opentag', function (node) {
-            console.debug(`tag: ${formatNode(node)}`);
+            console.debug(`tag: ${format(node)}`);
         });
 
         streamParser.on('attribute', function(node) {
-            console.debug(`attr: ${formatNode(node)}`);   
+            console.debug(`attr: ${format(node)}`);   
         });
 
         return streamParser;
@@ -50,7 +58,7 @@ const parse = (
             'lowercase': false,
             'xmlns': true,
             'position': false,
-            'strictEntities': true
+            'strictEntities': false
         });
 
         fs.createReadStream(inputPath)
