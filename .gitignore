@@ -1,3 +1,6 @@
+# Ignore and do not commit intermediate test file
+intermediate.xml
+
 # Logs
 logs
 *.log
