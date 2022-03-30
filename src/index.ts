@@ -3,19 +3,33 @@ import { createStream, SAXStream } from 'sax';
 
 import { ParserStrictness } from './constants';
 
+const formatNode = (node: any): string => {
+    try {
+        return node?.name.toLowerCase();
+    } catch(err) {
+        console.error(err);
+        return '';
+    }
+}
+
 const createXmlStreamParser = (
     isParserStrict: boolean,
     options = {}
 ): SAXStream => {
     try {
         const streamParser = createStream(isParserStrict, options);
+
         streamParser.on('error', function (err: any) {
             console.error(err)
             streamParser._parser.resume();
         });
 
         streamParser.on('opentag', function (node) {
-            console.log(`opentag: '${node}'`);
+            console.debug(`tag: ${formatNode(node)}`);
+        });
+
+        streamParser.on('attribute', function(node) {
+            console.debug(`attr: ${formatNode(node)}`);   
         });
 
         return streamParser;
@@ -38,11 +52,13 @@ const parse = (
             'position': false,
             'strictEntities': true
         });
+
         fs.createReadStream(inputPath)
             .pipe(streamParser)
             .pipe(fs.createWriteStream(outputPath));
-    } catch (e) {
-        console.error(e);
+
+    } catch (err) {
+        console.error(err);
     }
 }
 
